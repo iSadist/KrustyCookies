@@ -2,9 +2,9 @@
 
 This is the report for
 
- + Firstname Lastname, `stil_id`
- + ...
-
+ + Jan Svensson, `elt12jsv`
+ + Luke Postema, `elt14lpo`
+ + 
 We solved this project on our own, except for:
 
  + The Peer-review meeting
