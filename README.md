@@ -19,9 +19,7 @@ The model is in the file [`er-model.png`](er-model.png):
     <img src="er-model.png" width="100%">
 </center>
 
-(The image above describes the model from lecture 4, you
-must replace the file '`er-model.png`' with an image of your
-own ER-model).
+(Our own ER-model).
 
 
 ## Relations
@@ -35,16 +33,18 @@ so we use bold face for primary keys, italicized face for
 foreign keys, and bold italicized face for attributes which
 are both primary keys and foreign keys):
 
-+ authors(**author_name**, nationality)
-+ books(**isbn**, book_title, published_year, publisher)
-+ authored_books(**_author_name_**, **_isbn_**)
-+ copies(**copy_barcode**, _isbn_, _library_name_, shelf)
-+ ...
++ blocked(**_pallet_id_**)
++ pallets(**pallet_id**, location, date, time, receiver)
++ products(**name**, in_production)
++ loading_orders(**loading_id**, truck_id)
++ customers(**company_name**, **address**)
++ order(delivery_date, amount, destination)
++ recipe(**instructions**)
++ contains(**amount**)
++ ingredients(**name**, amount_in_store)
++ updates(date, amount)
 
-(this should be replaced with your own relations, of course,
-but use the same way of marking primary keys and foreign
-keys).
-
+## ALL ABOVE IS DONE
 
 ## Scripts to set up database
 
