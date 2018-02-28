@@ -34,15 +34,17 @@ foreign keys, and bold italicized face for attributes which
 are both primary keys and foreign keys):
 
 + blocked(**_pallet_id_**)
-+ pallets(**pallet_id**, location, date, time, receiver)
++ pallets(**pallet_id**, _productname_, _loadingid_, _reciever_, location, intime, outtime, date, time, receiver)
 + products(**name**, in_production)
++ product_orders(_productname_, _orderid_)
 + loading_orders(**loading_id**, truck_id)
-+ customers(**company_name**, **address**)
++ customers(**company_name**, address)
++ loading_customers(_loadingid_, _companyname_)
 + order(delivery_date, amount, destination)
-+ recipe(**instructions**)
-+ contains(**amount**)
++ recipe(instructions)
++ contains(_productname_, _ingredientname_,amount)
 + ingredients(**name**, amount_in_store)
-+ updates(date, amount)
++ updates(date, amount, _ingredientname_)
 
 ## ALL ABOVE IS DONE
 
