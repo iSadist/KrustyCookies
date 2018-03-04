@@ -35,7 +35,7 @@ are both primary keys and foreign keys):
 
 + blocked(**_pallet_id_**)
 + pallets(**pallet_id**, _name_, _loading_id_, _company_name_, location, intime, outtime, date, time, receiver)
-+ products(**product_name**, in_production, recipe)
++ products(**name**, in_production, recipe)
 + product_orders(**_name_**, amount, **_order_id_**)
 + customers(**company_name**, address)
 + orders(**order_id**, delivery_date, destination)
