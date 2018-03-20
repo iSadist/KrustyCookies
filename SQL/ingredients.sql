@@ -1,0 +1,20 @@
+-- Inserting ingredients
+INSERT INTO ingredients (name) VALUES ('Flour');
+INSERT INTO ingredients (name) VALUES ('Butter');
+INSERT INTO ingredients (name) VALUES ('Icing sugar');
+INSERT INTO ingredients (name) VALUES ('Roasted, chopped nuts');
+INSERT INTO ingredients (name) VALUES ('Fine-ground nuts');
+INSERT INTO ingredients (name) VALUES ('Ground, roasted nuts');
+INSERT INTO ingredients (name) VALUES ('Bread crumbs');
+INSERT INTO ingredients (name) VALUES ('Sugar');
+INSERT INTO ingredients (name) VALUES ('Egg whites');
+INSERT INTO ingredients (name) VALUES ('Chocolate');
+INSERT INTO ingredients (name) VALUES ('Marzipan');
+INSERT INTO ingredients (name) VALUES ('Eggs');
+INSERT INTO ingredients (name) VALUES ('Potato starch');
+INSERT INTO ingredients (name) VALUES ('Wheat flour');
+INSERT INTO ingredients (name) VALUES ('Sodium bicarbonate');
+INSERT INTO ingredients (name) VALUES ('Vanilla');
+INSERT INTO ingredients (name) VALUES ('Chopped almonds');
+INSERT INTO ingredients (name) VALUES ('Cinnamon');
+INSERT INTO ingredients (name) VALUES ('Vanilla sugar');
