@@ -13,9 +13,5 @@ all:
 generate-db: 
 	cd ./SQL && make
 	
-compile:
-
-run:
-	
 clean:
 	cd ./SQL && make clean
