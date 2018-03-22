@@ -1,3 +1,9 @@
+compile:
+	cd ./java && javac -d bin/ -cp src src/Main.java
+
+run:
+	cd ./java/bin && java Main
+
 all:
 	make clean
 	make generate-db
