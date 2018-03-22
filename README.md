@@ -43,6 +43,20 @@ are both primary keys and foreign keys):
 + ingredients(**ingredient_name**, amount_in_store)
 + updates(**_ingredient_name_**, date, amount)
 
+## Scripts
+
+The program can be compiled by running the scripts from the makefile. Below follows a list of the different commands.
+
+### Database
+
+### Compiling the java files
+
+For building the entire project one can simply type
+
+```shell
+make
+```
+
 ## ALL ABOVE IS DONE
 
 ## Scripts to set up database
