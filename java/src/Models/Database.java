@@ -112,8 +112,8 @@ public class Database {
 				+ "VALUES (?, CURRENT_TIMESTAMP, ?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setInt(1, ingredient);
-			ps.setString(2, value);
+			ps.setString(1, ingredient);
+			ps.setInt(2, value);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -267,7 +267,7 @@ public class Database {
 		return strings;
 	}
 
-	public ArrayList<Order> getOrders(String begin, String end) { // TODO: This one has to be changed to get amount the right way.
+	public ArrayList<Order> getOrders(String begin, String end) { // TODO: This one has to be changed to get amount the right way with recipes_order
 		ArrayList<Order> orders = new ArrayList<Order>();           // Also, each order needs to display the different products.
 		String query = "SELECT * FROM orders "
 				+ "WHERE delivery_date BETWEEN ? AND ?";
@@ -279,8 +279,8 @@ public class Database {
 			while(rs.next()) {
 				String company = rs.getString("company_name");
 				String product = rs.getString("product");
-				int amount = rs.getInt("amount");
-				orders.add(new Order(company, product, amount));
+				// int amount = rs.getInt("amount");
+				orders.add(new Order(company, product)); // TODO: Add list with products
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
