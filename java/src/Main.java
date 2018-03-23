@@ -6,6 +6,7 @@ import javax.swing.event.ChangeListener;
 
 import Models.Database;
 import ViewControllers.RawView;
+import ViewControllers.ProductionView;
 
 public class Main {
 	public static void main(String[] args) {
@@ -26,8 +27,8 @@ public class Main {
 			break;
 		case 1:
 			System.out.println("Starting Production...");
-			// component = new ProductionView(db);
-			// gui.setSize(600, 700);
+			component = new ProductionView(db);
+			gui.setSize(600, 700);
 			break;
 		}
 		gui.add(component);

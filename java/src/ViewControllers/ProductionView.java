@@ -12,7 +12,7 @@ public class ProductionView extends JTabbedPane {
 
 	public ProductionView(Database db) {
 
-		JPanel searchPane = new searchPallets(db);
+		JPanel searchPane = new SearchPallets(db);
 		JPanel blockedPane = new BlockedPalletsView(db);
 		JPanel productionPane = new PalletProductionView(db);
 
