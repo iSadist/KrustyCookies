@@ -267,8 +267,8 @@ public class Database {
 		return strings;
 	}
 
-	public ArrayList<Order> getOrders(String begin, String end) { // TODO: This one has to be changed to get amount the right way with recipes_order
-		ArrayList<Order> orders = new ArrayList<Order>();           // Also, each order needs to display the different products.
+	public ArrayList<Order> getOrders(String begin, String end) {
+		ArrayList<Order> orders = new ArrayList<Order>();
 		String query = "SELECT * FROM orders "
 				+ "WHERE delivery_date BETWEEN ? AND ?";
 		try {
@@ -278,9 +278,14 @@ public class Database {
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				String company = rs.getString("company_name");
-				// String product = rs.getString("product");
-				// int amount = rs.getInt("amount");
-				orders.add(new Order(company)); // TODO: Add list with products
+				int id = rs.getInt("order_id");
+				Order order = new Order(company, id);
+
+				for (Product p : this.getProductsForOrderID(rs.getInt("order_id"))) {
+					order.addProduct(p.getName(), p.getAmount());
+				}
+
+				orders.add(order);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -288,8 +293,25 @@ public class Database {
 		return orders;
 	}
 
-	public ArrayList<Product> getProductsForOrderID() {
-		return null;
+	public ArrayList<Product> getProductsForOrderID(int id) {
+		ArrayList<Product> products = new ArrayList<Product>();
+		String query = "SELECT * FROM recipes_order "
+				+ "WHERE order_id = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String productName = rs.getString("product_name");
+				int amount = rs.getInt("amount");
+
+				Product product = new Product(productName, amount);
+				products.add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return products;
 	}
 
 	public ArrayList<Pallet> getBlockedPallets() {

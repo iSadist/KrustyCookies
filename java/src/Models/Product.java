@@ -14,7 +14,7 @@ public class Product {
     this.amount = amount;
 	}
 
-	public String getCompany() {
+	public String getName() {
 		return name;
 	}
 

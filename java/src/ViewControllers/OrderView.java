@@ -20,20 +20,27 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 import Models.Database;
 import Models.Order;
+import Models.Product;
 
 
-public class OrderView extends JPanel implements BasicSubview { // TODO: Show orders with many products
+public class OrderView extends JPanel implements BasicSubview {
 
 	private static final long serialVersionUID = 1L;
 
 	private Database db;
 	private DefaultListModel<String> orderListModel;
 	private JList<String> orderList;
+	private DefaultListModel<String> productListModel;
+	private JList<String> productList;
 	private JFormattedTextField startDate;
 	private JFormattedTextField endDate;
+
+	private ArrayList<Order> orders;
 
 	public OrderView(Database db) {
 		this.db = db;
@@ -44,8 +51,14 @@ public class OrderView extends JPanel implements BasicSubview { // TODO: Show or
 
 		orderListModel = new DefaultListModel<String>();
 		orderList = new JList<String>(orderListModel);
-		JScrollPane recipeScrollPane = new JScrollPane(orderList);
-		listPanel.add(recipeScrollPane);
+		orderList.addListSelectionListener(new OrderSelectionHandler());
+		JScrollPane orderScrollPane = new JScrollPane(orderList);
+		listPanel.add(orderScrollPane);
+
+		productListModel = new DefaultListModel<String>();
+		productList = new JList<String>(productListModel);
+		JScrollPane productScrollPane = new JScrollPane(productList);
+		listPanel.add(productScrollPane);
 
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -75,9 +88,26 @@ public class OrderView extends JPanel implements BasicSubview { // TODO: Show or
 		System.out.println("Updating order list");
 		orderListModel.clear();
 		ArrayList<Order> orders = db.getOrders(begin, end);
+		this.orders = orders;
 		for (Order order : orders) {
-			orderListModel.addElement(order.getCompany()); // TODO: Fix this as above
+			orderListModel.addElement(order.getID() + ": " + order.getCompany());
 		}
+	}
+
+	public void updateProductList(int orderID) {
+		productListModel.clear();
+
+
+		for(Order o : this.orders) {
+			if (o.getID() == orderID) {
+				for(Product p : o.getProducts()) {
+					System.out.println(p.getName());
+					productListModel.addElement(p.getName() + " : " + p.getAmount());
+				}
+				return;
+			}
+		}
+
 	}
 
 	@Override
@@ -109,6 +139,18 @@ public class OrderView extends JPanel implements BasicSubview { // TODO: Show or
 			updateOrderList(startDate.getText(), endDate.getText());
 		}
 
+	}
+
+	class OrderSelectionHandler implements ListSelectionListener {
+
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			String selectedValue = orderList.getSelectedValue();
+			if (selectedValue != null) {
+				String orderID = selectedValue.substring(0, selectedValue.indexOf(":"));
+				updateProductList(Integer.valueOf(orderID));
+			}
+		}
 	}
 
 }
