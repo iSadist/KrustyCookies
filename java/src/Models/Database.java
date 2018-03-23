@@ -288,6 +288,10 @@ public class Database {
 		return orders;
 	}
 
+	public ArrayList<Product> getProductsForOrderID() {
+		return null;
+	}
+
 	public ArrayList<Pallet> getBlockedPallets() {
 		ArrayList<Pallet> list = new ArrayList<Pallet>();
 		Statement stmt = null;
