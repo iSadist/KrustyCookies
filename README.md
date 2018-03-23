@@ -4,7 +4,7 @@ This is the report for
 
  + Jan Svensson, `elt12jsv`
  + Luke Postema, `elt14lpo`
- + 
+ +
 We solved this project on our own, except for:
 
  + The Peer-review meeting
@@ -47,14 +47,31 @@ are both primary keys and foreign keys):
 
 The program can be compiled by running the scripts from the makefile. Below follows a list of the different commands.
 
-### Database
+### Building and running the project
 
-### Compiling the java files
+For generating the database
+```shell
+make generate-db
+```
+
+For compiling the java files
+```shell
+make compile
+```
+
+For running the program
+```shell
+make run
+```
 
 For building the entire project one can simply type
-
 ```shell
-make
+make all
+```
+
+For removing compiled files and generated databases
+```shell
+make clean
 ```
 
 ## ALL ABOVE IS DONE
@@ -123,7 +140,7 @@ you set up your project below).
 In the first few courses, you have probably used an
 [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment),
 such as Eclipse or Intellij, to compile and run your
-programs. 
+programs.
 
 Using an IDE can be nice, but having to start up Eclipse or
 Intellij only to test or run the program is time consuming,
@@ -213,7 +230,7 @@ where the options and arguments are:
   `.class` files in the `bin` directory, and in the
   `sqlite-jdbc.jar` archive (needed only if we use
   'Sqlite3')
-  
+
 + `dbtLab3.MovieBooking` is the fully qualified name of the
   `MovieBooking` class (it's in the `dbtLab3` package)
 
