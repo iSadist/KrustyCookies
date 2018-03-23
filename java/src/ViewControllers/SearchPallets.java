@@ -61,8 +61,9 @@ public class SearchPallets extends JPanel implements BasicSubview {
 		endDate = new JFormattedTextField(format);
 
 		GregorianCalendar c = new GregorianCalendar();
+		c.add(Calendar.DATE, 1);
 		endDate.setText(format.format(c.getTime()));
-		c.add(Calendar.DATE, -7);
+		c.add(Calendar.DATE, -8);
 		startDate.setText(format.format(c.getTime()));
 
 		JPanel dateSelector = new JPanel();

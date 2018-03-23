@@ -16,10 +16,10 @@ public class OrderDeliveryView extends JTabbedPane {
 		this.db = db;
 
 		JPanel orderPane = new OrderView(db);
-		JPanel recipePane = new DeliveryView(db);
+		JPanel customerPane = new CustomerView(db);
 
 		addTab("Order", orderPane);
-		addTab("Delivery", new ImageIcon() , recipePane, "Test");
+		addTab("Customers", new ImageIcon() , customerPane, "Test");
 
 		addChangeListener(new OrderChangeHandler());
 		getSelectedComponent();

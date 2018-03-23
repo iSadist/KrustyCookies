@@ -14,32 +14,21 @@ public class Main {
 		Database db = new Database();
 		db.openConnection("database.db");
 
-		JFrame gui = new JFrame();
-		Object [] options = {"Raw!", "Production", "Orders/Delivery"};
-		int option = JOptionPane.showOptionDialog(gui, "Chose which program to use.", "Program chooser", JOptionPane.INFORMATION_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, options, options[2]);
+		JFrame raw = new JFrame();
+		JFrame production = new JFrame();
+		JFrame order = new JFrame();
 
-		JComponent component = null;
+		raw.add(new RawView(db));
+		production.add(new ProductionView(db));
+		order.add(new OrderDeliveryView(db));
 
-		switch (option) {
-		case 0:
-			System.out.println("Starting Raw...");
-			component = new RawView(db);
-			gui.setSize(1250, 350);
-			break;
-		case 1:
-			System.out.println("Starting Production...");
-			component = new ProductionView(db);
-			gui.setSize(600, 700);
-			break;
-		case 2:
-			//Start Orders/Deliveries
-			System.out.println("Starting Order/Delivery...");
-			component = new OrderDeliveryView(db);
-			gui.setSize(900, 500);
-			break;
-		}
-		gui.add(component);
-		gui.setVisible(true);
+		raw.setSize(1250, 350);
+		production.setSize(600, 700);
+		order.setSize(900, 500);
+
+		raw.setVisible(true);
+		production.setVisible(true);
+		order.setVisible(true);
 	}
 
 }

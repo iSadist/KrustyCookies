@@ -61,6 +61,23 @@ public class Database {
 		}
 	}
 
+	public ArrayList<String> getCustomers() {
+		Statement stmt = null;
+		String query = "SELECT * FROM customers";
+		ArrayList<String> customers = new ArrayList<String>();
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				customers.add(rs.getString("company_name") + " - " + rs.getString("address"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return customers;
+		}
+		return customers;
+	}
+
 	public ArrayList<Ingredient> getIngredients() {
 		ArrayList<Ingredient> list = new ArrayList<Ingredient>();
 
@@ -293,6 +310,10 @@ public class Database {
 		return orders;
 	}
 
+	public void createOrder() {
+
+	}
+
 	public ArrayList<Product> getProductsForOrderID(int id) {
 		ArrayList<Product> products = new ArrayList<Product>();
 		String query = "SELECT * FROM recipes_order "
@@ -449,7 +470,13 @@ public class Database {
 //		Updating Raw Materials
 		ArrayList<Ingredient> ingredients = getIngredientsForRecipe(productName);
 		for (Ingredient ingredient : ingredients) {
-			updateIngredient(ingredient.getName(), ingredient.getAmount() * cookiesPerPallet/cookiesPerRecipe);
+			if (this.getIngredient(ingredient.getName()).getAmount() < ingredient.getAmount() * cookiesPerPallet/cookiesPerRecipe) {
+				return false;
+			}
+		}
+
+		for (Ingredient ingredient : ingredients) {
+			updateIngredient(ingredient.getName(), -ingredient.getAmount() * cookiesPerPallet/cookiesPerRecipe);
 		}
 
 		//Inserting to pallets
