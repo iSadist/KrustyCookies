@@ -72,10 +72,11 @@ public class OrderView extends JPanel implements BasicSubview { // TODO: Show or
 	}
 
 	public void updateOrderList(String begin, String end) {
+		System.out.println("Updating order list");
 		orderListModel.clear();
 		ArrayList<Order> orders = db.getOrders(begin, end);
 		for (Order order : orders) {
-			orderListModel.addElement(order.getCompany() + " " + order.getProduct()); // TODO: Fix this as above
+			orderListModel.addElement(order.getCompany()); // TODO: Fix this as above
 		}
 	}
 

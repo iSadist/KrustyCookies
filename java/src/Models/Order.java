@@ -8,19 +8,16 @@ public class Order { // TODO: Add a list containing recipes/products and amounts
                      //       and replace it with the current 'product'
 
 	private String companyName;
-	private String product;
 	private Date expectedDelivery;
 
-	public Order(String company, String product, Date date) {
+	public Order(String company, Date date) {
 		companyName = company;
-		this.product = product;
 
 		expectedDelivery = date;
 	}
 
-	public Order(String company, String product) {
+	public Order(String company) {
 		companyName = company;
-		this.product = product;
 
 		GregorianCalendar c = new GregorianCalendar();
 		c.add(Calendar.DATE, 7);
@@ -29,10 +26,6 @@ public class Order { // TODO: Add a list containing recipes/products and amounts
 
 	public String getCompany() {
 		return companyName;
-	}
-
-	public String getProduct() {
-		return product;
 	}
 
 	public Date getExpectedDeliveryDate() {

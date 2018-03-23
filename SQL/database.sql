@@ -53,10 +53,8 @@ CREATE TABLE customers (
 CREATE TABLE orders (
   order_id INTEGER PRIMARY KEY,
   company_name VARCHAR(100) NOT NULL,
-  product VARCHAR(20), --This should be handled in recipes_order instead
   delivery_date DATE,
-  FOREIGN KEY (company_name) REFERENCES customers(company_name),
-  FOREIGN KEY (product) REFERENCES recipes(product_name)
+  FOREIGN KEY (company_name) REFERENCES customers(company_name)
 );
 
 CREATE TABLE contains (

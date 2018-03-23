@@ -278,9 +278,9 @@ public class Database {
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				String company = rs.getString("company_name");
-				String product = rs.getString("product");
+				// String product = rs.getString("product");
 				// int amount = rs.getInt("amount");
-				orders.add(new Order(company, product)); // TODO: Add list with products
+				orders.add(new Order(company)); // TODO: Add list with products
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
