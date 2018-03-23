@@ -7,6 +7,7 @@ import javax.swing.event.ChangeListener;
 import Models.Database;
 import ViewControllers.RawView;
 import ViewControllers.ProductionView;
+import ViewControllers.OrderDeliveryView;
 
 public class Main {
 	public static void main(String[] args) {
@@ -14,8 +15,8 @@ public class Main {
 		db.openConnection("database.db");
 
 		JFrame gui = new JFrame();
-		Object [] options = {"Raw!", "Production"};
-		int option = JOptionPane.showOptionDialog(gui, "Chose which program to use.", "Program chooser", JOptionPane.INFORMATION_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+		Object [] options = {"Raw!", "Production", "Orders/Delivery"};
+		int option = JOptionPane.showOptionDialog(gui, "Chose which program to use.", "Program chooser", JOptionPane.INFORMATION_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, options, options[2]);
 
 		JComponent component = null;
 
@@ -29,6 +30,12 @@ public class Main {
 			System.out.println("Starting Production...");
 			component = new ProductionView(db);
 			gui.setSize(600, 700);
+			break;
+		case 2:
+			//Start Orders/Deliveries
+			System.out.println("Starting Order/Delivery...");
+			component = new OrderDeliveryView(db);
+			gui.setSize(900, 500);
 			break;
 		}
 		gui.add(component);
