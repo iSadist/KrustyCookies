@@ -85,7 +85,6 @@ public class OrderView extends JPanel implements BasicSubview {
 	}
 
 	public void updateOrderList(String begin, String end) {
-		System.out.println("Updating order list");
 		orderListModel.clear();
 		ArrayList<Order> orders = db.getOrders(begin, end);
 		this.orders = orders;
@@ -101,7 +100,6 @@ public class OrderView extends JPanel implements BasicSubview {
 		for(Order o : this.orders) {
 			if (o.getID() == orderID) {
 				for(Product p : o.getProducts()) {
-					System.out.println(p.getName());
 					productListModel.addElement(p.getName() + " : " + p.getAmount());
 				}
 				return;

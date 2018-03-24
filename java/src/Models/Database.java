@@ -18,9 +18,7 @@ public class Database {
 	public boolean openConnection(String filename) {
 		try {
             Class.forName("org.sqlite.JDBC");
-            System.out.println(Class.forName("org.sqlite.JDBC"));
             conn = DriverManager.getConnection("jdbc:sqlite:" + filename);
-            System.out.println(conn);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -28,6 +26,7 @@ public class Database {
             e.printStackTrace();
             return false;
         }
+				System.out.println("Connection to database established");
         return true;
 	}
 
@@ -466,13 +465,12 @@ public class Database {
 		return list;
 	}
 
-	public boolean addPallet(int id, String productName) {
+	public Response addPallet(int id, String productName) {
 //		Updating Raw Materials
 		ArrayList<Ingredient> ingredients = getIngredientsForRecipe(productName);
 		for (Ingredient ingredient : ingredients) {
 			if (this.getIngredient(ingredient.getName()).getAmount() < ingredient.getAmount() * cookiesPerPallet/cookiesPerRecipe) {
-				System.out.println("Not enough " + ingredient.getName());
-				return false;
+				return new Response(false, "Not enough " + ingredient.getName());
 			}
 		}
 
@@ -488,10 +486,10 @@ public class Database {
 			ps.setInt(1, id);
 			ps.setString(2, productName);
 			int result = ps.executeUpdate();
-			return result != 0;
+			return new Response(result != 0, "");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return new Response(false, "Database connection failed.");
 		}
 	}
 }

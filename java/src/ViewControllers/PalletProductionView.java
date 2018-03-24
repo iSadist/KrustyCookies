@@ -24,6 +24,7 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.NumberFormatter;
 
 import Models.Database;
+import Models.Response;
 import Models.Recipe;
 
 public class PalletProductionView extends JPanel implements BasicSubview {
@@ -33,10 +34,10 @@ public class PalletProductionView extends JPanel implements BasicSubview {
 	private JTextField palletNumber;
 	private JComboBox<String> productName;
 	private JButton scanInButton;
+	private JLabel messageLabel;
 
 	public PalletProductionView(Database db) {
 		this.db = db;
-
 
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
@@ -57,11 +58,16 @@ public class PalletProductionView extends JPanel implements BasicSubview {
 		scanInButton = new JButton("Scan in");
 		scanInButton.addActionListener(new ScannerHandler());
 
+		messageLabel = new JLabel("Test message");
+
 		layout.putConstraint(SpringLayout.NORTH, palletNumberLabel, 15, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.NORTH, productNameLabel, 20, SpringLayout.SOUTH, palletNumberLabel);
 		layout.putConstraint(SpringLayout.NORTH, scanInButton, 20, SpringLayout.SOUTH, productNameLabel);
 		layout.putConstraint(SpringLayout.WEST, scanInButton, 100, SpringLayout.WEST, this);
 		layout.putConstraint(SpringLayout.EAST, scanInButton, -100, SpringLayout.EAST, this);
+		layout.putConstraint(SpringLayout.NORTH, messageLabel, 20, SpringLayout.SOUTH, scanInButton);
+		layout.putConstraint(SpringLayout.WEST, messageLabel, 100, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.EAST, messageLabel, -100, SpringLayout.EAST, this);
 		layout.putConstraint(SpringLayout.NORTH, palletNumber, 10, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, palletNumber, 10, SpringLayout.EAST, palletNumberLabel);
 		layout.putConstraint(SpringLayout.EAST, palletNumber, -50, SpringLayout.EAST, this);
@@ -74,6 +80,7 @@ public class PalletProductionView extends JPanel implements BasicSubview {
 		add(productNameLabel);
 		add(productName);
 		add(scanInButton);
+		add(messageLabel);
 
 	}
 
@@ -81,20 +88,28 @@ public class PalletProductionView extends JPanel implements BasicSubview {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			boolean success = db.addPallet(Integer.valueOf(palletNumber.getText()), productName.getSelectedItem().toString());
-			if (!success) {
+			Response response = db.addPallet(Integer.valueOf(palletNumber.getText()), productName.getSelectedItem().toString());
+			if (!response.success) {
 				palletNumber.setBackground(Color.red);
+				messageLabel.setText(response.message);
 			} else {
 				palletNumber.setBackground(Color.green);
+				messageLabel.setText("");
 			}
 		}
 
 	}
 
+	private void resetState() {
+		palletNumber.setText("");
+		palletNumber.setBackground(Color.white);
+		productName.setSelectedIndex(1);
+		messageLabel.setText("");
+	}
+
 	@Override
 	public void switchedState() {
-		palletNumber.setText("");
-		productName.setSelectedIndex(1);
+		resetState();
 	}
 
 	class NumberFilter extends DocumentFilter

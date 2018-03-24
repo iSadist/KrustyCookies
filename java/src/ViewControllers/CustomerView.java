@@ -42,7 +42,6 @@ public class CustomerView extends JPanel implements BasicSubview {
 
 	@Override
 	public void switchedState() {
-		System.out.println("CustomerView showing");
 		this.updateCustomerList();
 	}
 }
