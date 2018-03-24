@@ -126,8 +126,7 @@ public class SearchPallets extends JPanel implements BasicSubview {
 
 			if (useSpecificCustomer.isSelected()) {
 				System.out.println(customerName.getSelectedItem().toString());
-				int arraySize = pallets.size();
-				for (int i = 0; i < arraySize; i++) {
+				for (int i = 0; i < pallets.size(); i++) {
 					Pallet current = pallets.get(i);
 					String company = db.getCompanyName(current.orderId);
 					System.out.println(company);
