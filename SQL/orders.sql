@@ -1,8 +1,8 @@
 -- Add orders
 
-INSERT INTO orders VALUES (1, 'Skånekakor AB', CURRENT_DATE - 7);
-INSERT INTO orders VALUES (2, 'Finkakor AB', CURRENT_DATE - 6);
-INSERT INTO orders VALUES (3, 'Bjudkakor AB', CURRENT_DATE - 5);
+INSERT INTO orders VALUES (1, 'Skånekakor AB', CURRENT_DATE);
+INSERT INTO orders VALUES (2, 'Finkakor AB', CURRENT_DATE);
+INSERT INTO orders VALUES (3, 'Bjudkakor AB', CURRENT_DATE);
 
 -- Add products for the orders
 

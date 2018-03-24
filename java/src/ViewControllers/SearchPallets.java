@@ -125,12 +125,16 @@ public class SearchPallets extends JPanel implements BasicSubview {
 			pallets = useSpecificProduct.isSelected() ? db.getPallets(startDate.getText(), endDate.getText(), productName.getSelectedItem().toString()) : db.getPallets(startDate.getText(), endDate.getText());
 
 			if (useSpecificCustomer.isSelected()) {
-				System.out.println(customerName.getSelectedItem().toString());
 				for (int i = 0; i < pallets.size(); i++) {
 					Pallet current = pallets.get(i);
 					String company = db.getCompanyName(current.orderId);
-					System.out.println(company);
-					if (company != customerName.getSelectedItem().toString()) {
+					String selectedCompany = customerName.getSelectedItem().toString();
+
+					if (selectedCompany.equals("NONE")) {
+						selectedCompany = "";
+					}
+
+					if (!company.equals(selectedCompany)) {
 						pallets.remove(i);
 						i--;
 					}
@@ -284,12 +288,13 @@ public class SearchPallets extends JPanel implements BasicSubview {
 		JPanel customerFilter = new JPanel();
 		customerFilter.setLayout(new BoxLayout(customerFilter, BoxLayout.X_AXIS));
 
-		useSpecificCustomer = new JToggleButton("Enable filter product");
+		useSpecificCustomer = new JToggleButton("Filter customer");
 		useSpecificCustomer.addActionListener(new CustomerFilterHandler());
 
 		Vector<String> customers = new Vector<>();
 		for(String customer : db.getCustomers()) {
-			customers.add(customer);
+			String customerName = customer.substring(0, customer.indexOf("-") - 1);
+			customers.add(customerName);
 		}
 		customerName = new JComboBox<String>(customers);
 		customerName.setEnabled(false);
@@ -314,7 +319,7 @@ public class SearchPallets extends JPanel implements BasicSubview {
 		productName = new JComboBox<String>(products);
 		productName.addActionListener(new CheckboxHandler());
 		productName.setEnabled(false);
-		useSpecificProduct = new JToggleButton("Enable filter product");
+		useSpecificProduct = new JToggleButton("Filter product");
 		useSpecificProduct.addActionListener(new CheckboxHandler());
 
 		productFilter.add(countLabel);
