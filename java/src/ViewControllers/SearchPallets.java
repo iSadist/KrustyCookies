@@ -47,7 +47,9 @@ public class SearchPallets extends JPanel implements BasicSubview {
 	private JFormattedTextField endDate;
 	private JTextField palletId;
 	private JComboBox<String> productName;
+	private JComboBox<String> customerName;
 	private JToggleButton useSpecificProduct;
+	private JToggleButton useSpecificCustomer;
 	private JLabel countLabel;
 
 	public SearchPallets(Database db) {
@@ -91,22 +93,10 @@ public class SearchPallets extends JPanel implements BasicSubview {
 		palletSelector.add(palletId);
 
 		JPanel inputFields = new JPanel();
-		inputFields.setLayout(new BoxLayout(inputFields, BoxLayout.X_AXIS));
+		inputFields.setLayout(new BoxLayout(inputFields, BoxLayout.Y_AXIS));
 
-		Vector<String> products = new Vector<>();
-		for (Recipe r : db.getRecipes()) {
-			products.add(r.getName());
-		}
-
-		productName = new JComboBox<String>(products);
-		productName.addActionListener(new CheckboxHandler());
-		productName.setEnabled(false);
-		useSpecificProduct = new JToggleButton("Enable filter product");
-		useSpecificProduct.addActionListener(new CheckboxHandler());
-		countLabel = new JLabel("0");
-		inputFields.add(countLabel);
-		inputFields.add(productName);
-		inputFields.add(useSpecificProduct);
+		setupProductFilter(inputFields);
+		setupCustomerFilter(inputFields);
 
 		JPanel twins = new JPanel(new BorderLayout());
 		twins.add(dateSelector, BorderLayout.NORTH);
@@ -133,6 +123,19 @@ public class SearchPallets extends JPanel implements BasicSubview {
 		} else {
 			ArrayList<Pallet> pallets = null;
 			pallets = useSpecificProduct.isSelected() ? db.getPallets(startDate.getText(), endDate.getText(), productName.getSelectedItem().toString()) : db.getPallets(startDate.getText(), endDate.getText());
+
+			if (useSpecificCustomer.isSelected()) {
+				System.out.println(customerName.getSelectedItem().toString());
+				int arraySize = pallets.size();
+				for (int i = 0; i < arraySize; i++) {
+					Pallet current = pallets.get(i);
+					System.out.println(current.reciever);
+					if (current.reciever != customerName.getSelectedItem().toString()) {
+						pallets.remove(i);
+						i--;
+					}
+				}
+			}
 
 			for(Pallet p : pallets) {
 				String element = p.id + " Product: " + p.productName + " Location: " + p.location + " Created: " + p.inTime + " Distrubuted: " + p.outTime;
@@ -191,6 +194,16 @@ public class SearchPallets extends JPanel implements BasicSubview {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			productName.setEnabled(useSpecificProduct.isSelected());
+			fillList();
+		}
+
+	}
+
+	class CustomerFilterHandler implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			customerName.setEnabled(useSpecificCustomer.isSelected());
 			fillList();
 		}
 
@@ -265,6 +278,50 @@ public class SearchPallets extends JPanel implements BasicSubview {
 	    }
 	}
 
+	// Private methods
 
+	private void setupCustomerFilter(JPanel pane) {
+		JPanel customerFilter = new JPanel();
+		customerFilter.setLayout(new BoxLayout(customerFilter, BoxLayout.X_AXIS));
+
+		useSpecificCustomer = new JToggleButton("Enable filter product");
+		useSpecificCustomer.addActionListener(new CustomerFilterHandler());
+
+		Vector<String> customers = new Vector<>();
+		for(String customer : db.getCustomers()) {
+			customers.add(customer);
+		}
+		customerName = new JComboBox<String>(customers);
+		customerName.setEnabled(false);
+		customerName.addActionListener(new CustomerFilterHandler());
+
+		customerFilter.add(customerName);
+		customerFilter.add(useSpecificCustomer);
+
+		pane.add(customerFilter);
+	}
+
+	private void setupProductFilter(JPanel pane) {
+		JPanel productFilter = new JPanel();
+		productFilter.setLayout(new BoxLayout(productFilter, BoxLayout.X_AXIS));
+
+		Vector<String> products = new Vector<>();
+		for (Recipe r : db.getRecipes()) {
+			products.add(r.getName());
+		}
+
+		countLabel = new JLabel("0");
+		productName = new JComboBox<String>(products);
+		productName.addActionListener(new CheckboxHandler());
+		productName.setEnabled(false);
+		useSpecificProduct = new JToggleButton("Enable filter product");
+		useSpecificProduct.addActionListener(new CheckboxHandler());
+
+		productFilter.add(countLabel);
+		productFilter.add(productName);
+		productFilter.add(useSpecificProduct);
+
+		pane.add(productFilter);
+	}
 
 }
