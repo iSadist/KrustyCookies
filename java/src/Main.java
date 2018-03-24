@@ -14,9 +14,9 @@ public class Main {
 		Database db = new Database();
 		db.openConnection("database.db");
 
-		JFrame raw = new JFrame();
-		JFrame production = new JFrame();
-		JFrame order = new JFrame();
+		JFrame raw = new JFrame("Program 3: raw materials and recipies");
+		JFrame production = new JFrame("Program 1: production, blocking & searching");
+		JFrame order = new JFrame("Program 2: orders & deliveries");
 
 		raw.add(new RawView(db));
 		production.add(new ProductionView(db));

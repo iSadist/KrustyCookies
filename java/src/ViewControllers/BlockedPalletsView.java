@@ -54,7 +54,7 @@ public class BlockedPalletsView extends JPanel implements BasicSubview {
 		productName = new JComboBox<String>(products);
 		productName.setEnabled(false);
 		productName.addActionListener(new CheckboxHandler());
-		useSpecificProduct = new JToggleButton("Enable filter product");
+		useSpecificProduct = new JToggleButton("Product filter");
 		useSpecificProduct.addActionListener(new CheckboxHandler());
 
 		Dimension maximumSize = new Dimension(1000, 100);

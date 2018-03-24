@@ -31,7 +31,7 @@ public class PalletProductionView extends JPanel implements BasicSubview {
 
 	private static final long serialVersionUID = 1L;
 	private Database db;
-	private JTextField palletNumber;
+	//private JTextField palletNumber;
 	private JComboBox<String> productName;
 	private JButton scanInButton;
 	private JLabel messageLabel;
@@ -47,12 +47,7 @@ public class PalletProductionView extends JPanel implements BasicSubview {
 			products.add(r.getName());
 		}
 
-		JLabel palletNumberLabel = new JLabel("Pallet number:");
-		palletNumber = new JTextField();
-
-		((AbstractDocument)palletNumber.getDocument()).setDocumentFilter(
-                new NumberFilter());
-
+		
 		JLabel productNameLabel = new JLabel("Product name:");
 		productName = new JComboBox<String>(products);
 		scanInButton = new JButton("Scan in");
@@ -60,23 +55,17 @@ public class PalletProductionView extends JPanel implements BasicSubview {
 
 		messageLabel = new JLabel("Test message");
 
-		layout.putConstraint(SpringLayout.NORTH, palletNumberLabel, 15, SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.NORTH, productNameLabel, 20, SpringLayout.SOUTH, palletNumberLabel);
+		layout.putConstraint(SpringLayout.NORTH, productNameLabel, 15, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.NORTH, scanInButton, 20, SpringLayout.SOUTH, productNameLabel);
 		layout.putConstraint(SpringLayout.WEST, scanInButton, 100, SpringLayout.WEST, this);
 		layout.putConstraint(SpringLayout.EAST, scanInButton, -100, SpringLayout.EAST, this);
 		layout.putConstraint(SpringLayout.NORTH, messageLabel, 20, SpringLayout.SOUTH, scanInButton);
 		layout.putConstraint(SpringLayout.WEST, messageLabel, 100, SpringLayout.WEST, this);
 		layout.putConstraint(SpringLayout.EAST, messageLabel, -100, SpringLayout.EAST, this);
-		layout.putConstraint(SpringLayout.NORTH, palletNumber, 10, SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.WEST, palletNumber, 10, SpringLayout.EAST, palletNumberLabel);
-		layout.putConstraint(SpringLayout.EAST, palletNumber, -50, SpringLayout.EAST, this);
 		layout.putConstraint(SpringLayout.WEST, productName, 10, SpringLayout.EAST, productNameLabel);
-		layout.putConstraint(SpringLayout.NORTH, productName, 10, SpringLayout.SOUTH, palletNumber);
+		layout.putConstraint(SpringLayout.NORTH, productName, 10, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.EAST, productName, -50, SpringLayout.EAST, this);
 
-		add(palletNumberLabel);
-		add(palletNumber);
 		add(productNameLabel);
 		add(productName);
 		add(scanInButton);
@@ -88,21 +77,17 @@ public class PalletProductionView extends JPanel implements BasicSubview {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Response response = db.addPallet(Integer.valueOf(palletNumber.getText()), productName.getSelectedItem().toString());
+			Response response = db.addPallet(productName.getSelectedItem().toString());
 			if (!response.success) {
-				palletNumber.setBackground(Color.red);
 				messageLabel.setText(response.message);
 			} else {
-				palletNumber.setBackground(Color.green);
-				messageLabel.setText("");
+				messageLabel.setText(response.message);
 			}
 		}
 
 	}
 
 	private void resetState() {
-		palletNumber.setText("");
-		palletNumber.setBackground(Color.white);
 		productName.setSelectedIndex(1);
 		messageLabel.setText("");
 	}
@@ -110,56 +95,5 @@ public class PalletProductionView extends JPanel implements BasicSubview {
 	@Override
 	public void switchedState() {
 		resetState();
-	}
-
-	class NumberFilter extends DocumentFilter
-	{
-	    @Override
-	    public void insertString(DocumentFilter.FilterBypass fp
-	            , int offset, String string, AttributeSet aset)
-	                                throws BadLocationException
-	    {
-	        int len = string.length();
-	        boolean isValidInteger = palletNumber.getText().length() >= 9 ? false : true;
-
-	        for (int i = 0; i < len; i++)
-	        {
-	            if (!Character.isDigit(string.charAt(i)))
-	            {
-	                isValidInteger = false;
-	                break;
-	            }
-	        }
-	        if (isValidInteger)
-	            super.insertString(fp, offset, string, aset);
-	        else
-	            Toolkit.getDefaultToolkit().beep();
-	    }
-
-	    @Override
-	    public void replace(DocumentFilter.FilterBypass fp, int offset
-	                    , int length, String string, AttributeSet aset)
-	                                        throws BadLocationException
-	    {
-	        int len = string.length();
-	        boolean isValidInteger = palletNumber.getText().length() >= 9 ? false : true;
-
-	        for (int i = 0; i < len; i++)
-	        {
-	            if (!Character.isDigit(string.charAt(i)))
-	            {
-	                isValidInteger = false;
-	                break;
-	            }
-	        }
-	        if (len > 10) {
-	        	isValidInteger = false;
-	        }
-
-	        if (isValidInteger)
-	            super.replace(fp, offset, length, string, aset);
-	        else
-	            Toolkit.getDefaultToolkit().beep();
-	    }
 	}
 }

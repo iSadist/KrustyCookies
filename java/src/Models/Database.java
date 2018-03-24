@@ -110,8 +110,7 @@ public class Database {
 				+ "ON i.name = u.ingredient_name "
 				+ "GROUP BY i.name "
 				+ "HAVING i.name = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, name);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -126,8 +125,7 @@ public class Database {
 	public void updateIngredient(String ingredient, int value) {
 		String query = "INSERT INTO ingredient_updates "
 				+ "VALUES (?, CURRENT_TIMESTAMP, ?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, ingredient);
 			ps.setInt(2, value);
 			ps.executeUpdate();
@@ -163,8 +161,7 @@ public class Database {
 		String query = "SELECT in_production FROM recipes "
 				+ "WHERE product_name = ?";
 		boolean inProduction = true;
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, recipe);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -181,8 +178,7 @@ public class Database {
 		ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 		String query = "SELECT * FROM contains "
 				+ "WHERE product_name = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, recipe);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -198,8 +194,7 @@ public class Database {
 
 	public void addIngredient(Ingredient i) {
 		String query = "INSERT INTO ingredients VALUES (?,?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, i.getName());
 			ps.setString(2, i.getMessure());
 			ps.executeUpdate();
@@ -213,8 +208,7 @@ public class Database {
 				+ "SET amount = ? "
 				+ "WHERE ingredient_name = ? "
 				+ "AND product_name = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setInt(1, amount);
 			ps.setString(2, ingredient);
 			ps.setString(3,recipe);
@@ -227,8 +221,7 @@ public class Database {
 	public void addIngredientToRecipe(String ingredient, String recipe, int amount) {
 		String messure = getIngredient(ingredient).getMessure();
 		String query = "INSERT INTO contains VALUES (?,?,?,?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, recipe);
 			ps.setString(2, ingredient);
 			ps.setInt(3, amount);
@@ -243,8 +236,7 @@ public class Database {
 		String query = "DELETE FROM contains "
 				+ "WHERE product_name = ? "
 				+ "AND ingredient_name = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, recipe);
 			ps.setString(2, ingredient);
 			ps.executeUpdate();
@@ -255,8 +247,7 @@ public class Database {
 
 	public void addRecipe(String name) {
 		String query = "INSERT INTO recipes (product_name) VALUES (?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, name);
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -268,8 +259,7 @@ public class Database {
 		String query = "UPDATE recipes "
 				+ "SET in_production = ? "
 				+ "WHERE product_name = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setBoolean(1, inProduction);
 			ps.setString(2, recipe);
 			ps.executeUpdate();
@@ -287,8 +277,7 @@ public class Database {
 		ArrayList<Order> orders = new ArrayList<Order>();
 		String query = "SELECT * FROM orders "
 				+ "WHERE delivery_date BETWEEN ? AND ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, begin);
 			ps.setString(2, end);
 			ResultSet rs = ps.executeQuery();
@@ -317,8 +306,7 @@ public class Database {
 		ArrayList<Product> products = new ArrayList<Product>();
 		String query = "SELECT * FROM recipes_order "
 				+ "WHERE order_id = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -366,8 +354,7 @@ public class Database {
 				+ "WHERE pallet_id IN "
 				+ "(SELECT pallet_id FROM blocked) "
 				+ "AND product_name = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, productName);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -390,8 +377,7 @@ public class Database {
 	public void addToBlocked(int id) {
 		String query = "INSERT INTO blocked "
 				+ "VALUES (?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -402,8 +388,7 @@ public class Database {
 	public void removeFromBlocked(int id) {
 		String query = "DELETE FROM blocked "
 				+ "WHERE pallet_id = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -415,8 +400,7 @@ public class Database {
 		ArrayList<Pallet> list = new ArrayList<Pallet>();
 		String query = "SELECT * FROM pallets "
 				+ "WHERE in_time BETWEEN ? AND ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, begin);
 			ps.setString(2, end);
 			ResultSet rs = ps.executeQuery();
@@ -442,8 +426,7 @@ public class Database {
 		String query = "SELECT * FROM pallets "
 				+ "WHERE in_time BETWEEN ? AND ? "
 				+ "AND product_name = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
+		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, begin);
 			ps.setString(2, end);
 			ps.setString(3, name);
@@ -465,8 +448,8 @@ public class Database {
 		return list;
 	}
 
-	public Response addPallet(int id, String productName) {
-//		Updating Raw Materials
+	public Response addPallet(String productName) {
+		//Updating Raw Materials
 		ArrayList<Ingredient> ingredients = getIngredientsForRecipe(productName);
 		for (Ingredient ingredient : ingredients) {
 			if (this.getIngredient(ingredient.getName()).getAmount() < ingredient.getAmount() * cookiesPerPallet/cookiesPerRecipe) {
@@ -475,19 +458,22 @@ public class Database {
 		}
 
 		//Inserting to pallets
-		String query = "INSERT INTO pallets (pallet_id, product_name, receiver) "
-				+ "VALUES (?,?, 'NONE')";
-		try {
-			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setInt(1, id);
-			ps.setString(2, productName);
+		String query = "INSERT INTO pallets (product_name, receiver) "
+				+ "VALUES (?, 'NONE')";
+		try (PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
+			ps.setString(1, productName);
 			boolean result = ps.executeUpdate() != 0;
+			ResultSet rs = ps.getGeneratedKeys();
+			int id = -1;
+			if(rs.next()){
+				id = rs.getInt(1);
+			}
 			if (result) {
 				for (Ingredient ingredient : ingredients) {
 					updateIngredient(ingredient.getName(), -ingredient.getAmount() * cookiesPerPallet/cookiesPerRecipe);
 				}
 			}
-			return new Response(result, "");
+			return new Response(result, "Pallet created with number: " + id);
 		} catch (SQLException e) {
 			if (e.getErrorCode() == 19) {
 				return new Response(false, "Pallet with that number has already been created.");

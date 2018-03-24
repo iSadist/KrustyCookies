@@ -1,5 +1,6 @@
 package ViewControllers;
 
+import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -126,8 +127,14 @@ public class IngredientView extends JPanel implements BasicSubview {
 	}
 
 	public void updateIngredient(String ingredient, int amount) {
-		db.updateIngredient(ingredient, amount);
-		setIngredientDetail(ingredient);
+		if(amount < 0){
+			updateAmountField.setBackground(Color.red);
+		} else {
+			db.updateIngredient(ingredient, amount);
+			setIngredientDetail(ingredient);
+			updateAmountField.setBackground(Color.white);
+		}
+		
 	}
 
 	@Override
