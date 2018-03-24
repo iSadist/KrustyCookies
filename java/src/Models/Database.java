@@ -435,12 +435,13 @@ public class Database {
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
 				p.outTime = rs.getString("out_time");
+				return p;
 			}
+			return null;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		return p;
 	}
 
 
