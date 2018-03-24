@@ -38,6 +38,7 @@ public class SearchPallets extends JPanel implements BasicSubview {
 	private JList<String> orderList;
 	private JFormattedTextField startDate;
 	private JFormattedTextField endDate;
+	private JFormattedTextField palletId;
 	private JComboBox<String> productName;
 	private JToggleButton useSpecificProduct;
 	private JLabel countLabel;
@@ -68,9 +69,17 @@ public class SearchPallets extends JPanel implements BasicSubview {
 
 		JPanel dateSelector = new JPanel();
 		dateSelector.setLayout(new BoxLayout(dateSelector, BoxLayout.X_AXIS));
+		dateSelector.add(new JLabel("Search by date: "));
 		dateSelector.add(startDate);
 		dateSelector.add(new JLabel(" to "));
 		dateSelector.add(endDate);
+
+		JPanel palletSelector = new JPanel();
+		palletSelector.setLayout(new BoxLayout(palletSelector, BoxLayout.X_AXIS));
+		palletSelector.add(new JLabel("Search by pallet id: "));
+		palletId = new JFormattedTextField(format);
+		palletId.setText("0");
+		palletSelector.add(palletId);
 
 		JPanel inputFields = new JPanel();
 		inputFields.setLayout(new BoxLayout(inputFields, BoxLayout.X_AXIS));
@@ -90,24 +99,36 @@ public class SearchPallets extends JPanel implements BasicSubview {
 		inputFields.add(productName);
 		inputFields.add(useSpecificProduct);
 
-		add(dateSelector, BorderLayout.NORTH);
+		JPanel twins = new JPanel(new BorderLayout());
+		twins.add(dateSelector, BorderLayout.NORTH);
+		twins.add(palletSelector, BorderLayout.SOUTH);
+		add(twins, BorderLayout.NORTH);
 		add(listPanel, BorderLayout.CENTER);
 		add(inputFields, BorderLayout.SOUTH);
 
 		startDate.getDocument().addDocumentListener(new DateChangedHandler());
 		endDate.getDocument().addDocumentListener(new DateChangedHandler());
+		palletId.getDocument().addDocumentListener(new DateChangedHandler());
 
 	}
 
 	public void fillList() {
 		orderListModel.clear();
-
-		ArrayList<Pallet> pallets = null;
-		pallets = useSpecificProduct.isSelected() ? db.getPallets(startDate.getText(), endDate.getText(), productName.getSelectedItem().toString()) : db.getPallets(startDate.getText(), endDate.getText());
-
-		for(Pallet p : pallets) {
+		if(!palletId.getText().equals("0") && !palletId.getText().equals("")){
+			orderListModel.clear();
+			Pallet p;
+			p = db.getPalletFromId(palletId.getText());
 			String element = p.id + " Product: " + p.productName + " Location: " + p.location + " Created: " + p.inTime + " Distrubuted: " + p.outTime;
 			orderListModel.addElement(element);
+			
+		} else {
+			ArrayList<Pallet> pallets = null;
+			pallets = useSpecificProduct.isSelected() ? db.getPallets(startDate.getText(), endDate.getText(), productName.getSelectedItem().toString()) : db.getPallets(startDate.getText(), endDate.getText());
+
+			for(Pallet p : pallets) {
+				String element = p.id + " Product: " + p.productName + " Location: " + p.location + " Created: " + p.inTime + " Distrubuted: " + p.outTime;
+				orderListModel.addElement(element);
+			}
 		}
 		countLabel.setText(String.valueOf(orderListModel.size()));
 	}

@@ -421,6 +421,29 @@ public class Database {
 		return list;
 	}
 
+	public Pallet getPalletFromId(String id) {
+		Pallet p = new Pallet();
+		String query = "SELECT * FROM pallets "
+				+ "WHERE pallet_id = ?";
+		try (PreparedStatement ps = conn.prepareStatement(query)){
+			ps.setString(1, id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				p.id = rs.getInt("pallet_id");
+				p.productName = rs.getString("product_name");
+				p.location = rs.getString("location");
+				p.inTime = rs.getString("in_time");
+				p.outTime = rs.getString("out_time");
+				p.reciever = rs.getString("receiver");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return p;
+	}
+
+
 	public ArrayList<Pallet> getPallets(String begin, String end, String name) {
 		ArrayList<Pallet> list = new ArrayList<Pallet>();
 		String query = "SELECT * FROM pallets "
