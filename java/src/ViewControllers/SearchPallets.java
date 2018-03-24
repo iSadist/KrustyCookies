@@ -117,7 +117,7 @@ public class SearchPallets extends JPanel implements BasicSubview {
 			orderListModel.clear();
 			Pallet p;
 			p = db.getPalletFromId(palletId.getText());
-			String element = p.id + " Product: " + p.productName + " Location: " + p.location + " Created: " + p.inTime + " Distrubuted: " + p.outTime;
+			String element = p.id + " Product: " + p.productName + " Location: " + p.location + " Created: " + p.inTime + " Distributed: " + p.outTime;
 			orderListModel.addElement(element);
 
 		} else {
@@ -129,8 +129,9 @@ public class SearchPallets extends JPanel implements BasicSubview {
 				int arraySize = pallets.size();
 				for (int i = 0; i < arraySize; i++) {
 					Pallet current = pallets.get(i);
-					System.out.println(current.reciever);
-					if (current.reciever != customerName.getSelectedItem().toString()) {
+					String company = db.getCompanyName(current.orderId);
+					System.out.println(company);
+					if (company != customerName.getSelectedItem().toString()) {
 						pallets.remove(i);
 						i--;
 					}

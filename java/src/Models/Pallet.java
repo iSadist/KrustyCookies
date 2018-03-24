@@ -3,7 +3,7 @@ package Models;
 public class Pallet {
 
 	public int id;
-	public int order_id;
+	public int orderId;
 	public String productName;
 	public String location;
 	public String inTime;
@@ -11,9 +11,9 @@ public class Pallet {
 
 	public Pallet() {}
 
-	public Pallet(int id, int order_id, String product, String location, String inTime, String outTime, String reciever) {
+	public Pallet(int id, int orderId, String product, String location, String inTime, String outTime, String reciever) {
 		this.id = id;
-		this.order_id = order_id;
+		this.orderId = orderId;
 		this.productName = product;
 		this. location = location;
 		this.inTime = inTime;

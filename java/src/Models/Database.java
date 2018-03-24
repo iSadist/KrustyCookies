@@ -334,7 +334,7 @@ public class Database {
 			while(rs.next()) {
 				Pallet p = new Pallet();
 				p.id = rs.getInt("pallet_id");
-				p.order_id = rs.getInt("order_id");
+				p.orderId = rs.getInt("order_id");
 				p.productName = rs.getString("product_name");
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
@@ -360,7 +360,7 @@ public class Database {
 			while(rs.next()) {
 				Pallet p = new Pallet();
 				p.id = rs.getInt("pallet_id");
-				p.order_id = rs.getInt("order_id");
+				p.orderId = rs.getInt("order_id");
 				p.productName = rs.getString("product_name");
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
@@ -407,7 +407,7 @@ public class Database {
 			while(rs.next()) {
 				Pallet p = new Pallet();
 				p.id = rs.getInt("pallet_id");
-				p.order_id = rs.getInt("order_id");
+				p.orderId = rs.getInt("order_id");
 				p.productName = rs.getString("product_name");
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
@@ -430,7 +430,7 @@ public class Database {
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				p.id = rs.getInt("pallet_id");
-				p.order_id = rs.getInt("order_id");
+				p.orderId = rs.getInt("order_id");
 				p.productName = rs.getString("product_name");
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
@@ -457,7 +457,7 @@ public class Database {
 			while(rs.next()) {
 				Pallet p = new Pallet();
 				p.id = rs.getInt("pallet_id");
-				p.order_id = rs.getInt("order_id");
+				p.orderId = rs.getInt("order_id");
 				p.productName = rs.getString("product_name");
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
@@ -469,6 +469,23 @@ public class Database {
 			return null;
 		}
 		return list;
+	}
+
+	public String getCompanyName(int orderId) {
+		String name = "";
+		String query = "SELECT company_name FROM orders "
+				+ "WHERE order_id = ?";
+		try (PreparedStatement ps = conn.prepareStatement(query)){
+			ps.setInt(1, orderId);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				name = rs.getString("company_name");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return name;
 	}
 
 	public Response addPallet(String productName) {
