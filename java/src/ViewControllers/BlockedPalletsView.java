@@ -81,7 +81,7 @@ public class BlockedPalletsView extends JPanel implements BasicSubview {
 		pallets = useSpecificProduct.isSelected() ? db.getBlockedPallets(productName.getSelectedItem().toString()) : db.getBlockedPallets();
 
 		for(Pallet p : pallets) {
-			String element = p.id + " Product: " + p.productName + " Location: " + p.location + " Created: " + p.inTime + " Distrubuted: " + p.outTime;
+			String element = p.id + " Product: " + p.productName + " Location: " + p.location + " Created: " + p.inTime + " Distributed: " + p.outTime;
 			palletListModel.addElement(element);
 		}
 	}

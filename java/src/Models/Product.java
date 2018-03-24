@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 public class Product {
 
 	private String name;
-  private int amount;
+  	private int amount;
 
 	public Product(String name, int amount) {
 		this.name = name;

@@ -139,7 +139,7 @@ public class Database {
 		ArrayList<Recipe> list = new ArrayList<Recipe>();
 
 		Statement stmt = null;
-		String query = "SELECT * FROM recipes";
+		String query = "SELECT * FROM products";
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
@@ -158,7 +158,7 @@ public class Database {
 	}
 
 	public boolean recipeInProduction(String recipe) {
-		String query = "SELECT in_production FROM recipes "
+		String query = "SELECT in_production FROM products "
 				+ "WHERE product_name = ?";
 		boolean inProduction = true;
 		try (PreparedStatement ps = conn.prepareStatement(query)){
@@ -246,7 +246,7 @@ public class Database {
 	}
 
 	public void addRecipe(String name) {
-		String query = "INSERT INTO recipes (product_name) VALUES (?)";
+		String query = "INSERT INTO products (product_name) VALUES (?)";
 		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, name);
 			ps.executeUpdate();
@@ -256,7 +256,7 @@ public class Database {
 	}
 
 	public void setProductionState(boolean inProduction, String recipe) {
-		String query = "UPDATE recipes "
+		String query = "UPDATE products "
 				+ "SET in_production = ? "
 				+ "WHERE product_name = ?";
 		try (PreparedStatement ps = conn.prepareStatement(query)){
@@ -304,7 +304,7 @@ public class Database {
 
 	public ArrayList<Product> getProductsForOrderID(int id) {
 		ArrayList<Product> products = new ArrayList<Product>();
-		String query = "SELECT * FROM recipes_order "
+		String query = "SELECT * FROM product_orders "
 				+ "WHERE order_id = ?";
 		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setInt(1, id);
@@ -334,11 +334,11 @@ public class Database {
 			while(rs.next()) {
 				Pallet p = new Pallet();
 				p.id = rs.getInt("pallet_id");
+				p.order_id = rs.getInt("order_id");
 				p.productName = rs.getString("product_name");
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
 				p.outTime = rs.getString("out_time");
-				p.reciever = rs.getString("receiver");
 				list.add(p);
 			}
 		} catch (SQLException e) {
@@ -360,11 +360,11 @@ public class Database {
 			while(rs.next()) {
 				Pallet p = new Pallet();
 				p.id = rs.getInt("pallet_id");
+				p.order_id = rs.getInt("order_id");
 				p.productName = rs.getString("product_name");
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
 				p.outTime = rs.getString("out_time");
-				p.reciever = rs.getString("receiver");
 				list.add(p);
 			}
 		} catch (SQLException e) {
@@ -407,11 +407,11 @@ public class Database {
 			while(rs.next()) {
 				Pallet p = new Pallet();
 				p.id = rs.getInt("pallet_id");
+				p.order_id = rs.getInt("order_id");
 				p.productName = rs.getString("product_name");
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
 				p.outTime = rs.getString("out_time");
-				p.reciever = rs.getString("receiver");
 				list.add(p);
 			}
 		} catch (SQLException e) {
@@ -430,11 +430,11 @@ public class Database {
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				p.id = rs.getInt("pallet_id");
+				p.order_id = rs.getInt("order_id");
 				p.productName = rs.getString("product_name");
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
 				p.outTime = rs.getString("out_time");
-				p.reciever = rs.getString("receiver");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -457,11 +457,11 @@ public class Database {
 			while(rs.next()) {
 				Pallet p = new Pallet();
 				p.id = rs.getInt("pallet_id");
+				p.order_id = rs.getInt("order_id");
 				p.productName = rs.getString("product_name");
 				p.location = rs.getString("location");
 				p.inTime = rs.getString("in_time");
 				p.outTime = rs.getString("out_time");
-				p.reciever = rs.getString("receiver");
 				list.add(p);
 			}
 		} catch (SQLException e) {
@@ -481,8 +481,8 @@ public class Database {
 		}
 
 		//Inserting to pallets
-		String query = "INSERT INTO pallets (product_name, receiver) "
-				+ "VALUES (?, 'NONE')";
+		String query = "INSERT INTO pallets (product_name) "
+				+ "VALUES (?)";
 		try (PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
 			ps.setString(1, productName);
 			boolean result = ps.executeUpdate() != 0;
