@@ -1,10 +1,10 @@
 -- Inserting Recipes
-INSERT INTO recipes (product_name) VALUES ("Nut ring");
-INSERT INTO recipes (product_name) VALUES ("Nut cookie");
-INSERT INTO recipes (product_name) VALUES ("Amneris");
-INSERT INTO recipes (product_name) VALUES ("Tango");
-INSERT INTO recipes (product_name) VALUES ("Almond delight");
-INSERT INTO recipes (product_name) VALUES ("Berliner");
+INSERT INTO products (product_name) VALUES ("Nut ring");
+INSERT INTO products (product_name) VALUES ("Nut cookie");
+INSERT INTO products (product_name) VALUES ("Amneris");
+INSERT INTO products (product_name) VALUES ("Tango");
+INSERT INTO products (product_name) VALUES ("Almond delight");
+INSERT INTO products (product_name) VALUES ("Berliner");
 
 -- Inserting ingredient relationship
 INSERT INTO contains VALUES ('Nut ring', 'Flour', 450, 'g');

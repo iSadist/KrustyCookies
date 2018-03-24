@@ -4,7 +4,7 @@ all:
 	sqlite3 database.db < customers.sql
 	sqlite3 database.db < blocked.sql
 	sqlite3 database.db < pallets.sql
-	sqlite3 database.db < recipies.sql
+	sqlite3 database.db < products.sql
 	sqlite3 database.db < orders.sql
 
 clean:

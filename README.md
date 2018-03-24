@@ -4,7 +4,7 @@ This is the report for
 
  + Jan Svensson, `elt12jsv`
  + Luke Postema, `elt14lpo`
- +
+ 
 We solved this project on our own, except for:
 
  + The Peer-review meeting
@@ -23,25 +23,15 @@ The model is in the file [`er-model.png`](er-model.png):
 
 
 ## Relations
-
-The ER-model above gives the following relations (neither
-[Markdown](https://docs.gitlab.com/ee/user/markdown.html)
-nor [HTML5](https://en.wikipedia.org/wiki/HTML5) handles
-underlining withtout resorting to
-[CSS](https://en.wikipedia.org/wiki/Cascading_Style_Sheets),
-so we use bold face for primary keys, italicized face for
-foreign keys, and bold italicized face for attributes which
-are both primary keys and foreign keys):
-
 + blocked(**_pallet_id_**)
-+ pallets(**pallet_id**, _name_, _company_name_, location, intime, outtime, date, time, receiver)
-+ products(**name**, in_production, recipe)
++ pallets(**pallet_id**, _name_, location, intime, outtime, _order_id_)
++ products(**name**, in_production, instructions)
 + product_orders(**_name_**, amount, **_order_id_**)
 + customers(**company_name**, address)
-+ orders(**order_id**, delivery_date, destination)
-+ contains(**_name_**, **_ingredient_name_**, amount)
-+ ingredients(**ingredient_name**, amount_in_store)
-+ updates(**_ingredient_name_**, date, amount)
++ orders(**order_id**, delivery_date, company_name)
++ contains(**_product_name_**, **_ingredient_name_**, amount, type)
++ ingredients(**name**, type)
++ ingredient_updates(**_ingredient_name_**, day, amount)
 
 ## Scripts
 

@@ -2,15 +2,16 @@ PRAGMA foreign_keys = OFF;
 
 DROP TABLE IF EXISTS blocked;
 DROP TABLE IF EXISTS pallets;
-DROP TABLE IF EXISTS recipes;
-DROP TABLE IF EXISTS recipes_order;
+DROP TABLE IF EXISTS pallet_orders;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS product_orders;
 DROP TABLE IF EXISTS customers;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS ingredients;
 DROP TABLE IF EXISTS ingredient_updates;
 DROP TABLE IF EXISTS contains;
-DROP TABLE IF EXISTS loading_orders;
-DROP TABLE IF EXISTS loading_customers;
+--DROP TABLE IF EXISTS loading_orders;
+--DROP TABLE IF EXISTS loading_customers;
 
 PRAGMA foreign_keys = ON;
 
@@ -21,23 +22,24 @@ CREATE TABLE blocked (
 
 CREATE TABLE pallets (
   pallet_id INTEGER,
+  order_id INTEGER,
   product_name VARCHAR(100) NOT NULL,
-  receiver VARCHAR(100),
   location VARCHAR(100) DEFAULT ('Freezer'),
   in_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   out_time TIMESTAMP,
   PRIMARY KEY (pallet_id),
   FOREIGN KEY (product_name) REFERENCES recipes(product_name),
-  FOREIGN KEY (receiver) REFERENCES customers(company_name)
+  FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
 
-CREATE TABLE recipes (
+CREATE TABLE products (
   product_name VARCHAR(100) PRIMARY KEY,
   instructions TEXT,
   in_production BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE recipes_order (
+
+CREATE TABLE product_orders (
   product_name VARCHAR(100) NOT NULL,
   order_id INTEGER NOT NULL,
   amount INTEGER,
@@ -82,7 +84,7 @@ CREATE TABLE ingredient_updates (
 
 -- Tables for loading uses
 
-CREATE TABLE loading_orders (
+/*CREATE TABLE loading_orders (
   loading_id INTEGER PRIMARY KEY,
   truck_id CHAR(6) NOT NULL
 );
@@ -92,4 +94,4 @@ CREATE TABLE loading_customers (
   company_name VARCHAR(100) NOT NULL,
   FOREIGN KEY (loading_id) REFERENCES loading_orders(loading_id),
   FOREIGN KEY (company_name) REFERENCES customers(company_name)
-);
+);*/

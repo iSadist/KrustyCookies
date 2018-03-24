@@ -1,14 +1,13 @@
 -- Add orders
 
-INSERT INTO orders VALUES (1, 'Skånekakor AB', CURRENT_DATE);
-INSERT INTO orders VALUES (2, 'Skånekakor AB', CURRENT_DATE);
-INSERT INTO orders VALUES (3, 'Finkakor AB', CURRENT_DATE);
-INSERT INTO orders VALUES (4, 'Bjudkakor AB', CURRENT_DATE);
+INSERT INTO orders VALUES (1, 'Skånekakor AB', CURRENT_DATE - 7);
+INSERT INTO orders VALUES (2, 'Finkakor AB', CURRENT_DATE - 6);
+INSERT INTO orders VALUES (3, 'Bjudkakor AB', CURRENT_DATE - 5);
 
 -- Add products for the orders
 
-INSERT INTO recipes_order VALUES ("Nut ring", 1, 2);
-INSERT INTO recipes_order VALUES ("Tango", 2, 10);
-INSERT INTO recipes_order VALUES ("Tango", 3, 5);
-INSERT INTO recipes_order VALUES ("Berliner", 3, 15);
-INSERT INTO recipes_order VALUES ("Nut cookie", 4, 200);
+INSERT INTO product_orders VALUES ("Nut ring", 1, 2);
+INSERT INTO product_orders VALUES ("Tango", 2, 1);
+INSERT INTO product_orders VALUES ("Tango", 2, 1);
+INSERT INTO product_orders VALUES ("Berliner", 3, 3);
+INSERT INTO product_orders VALUES ("Nut cookie", 3, 2);
