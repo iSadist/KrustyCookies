@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Vector;
+import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -24,6 +26,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.NumberFormatter;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.AbstractDocument;
 
 import Models.Database;
 import Models.Pallet;
@@ -38,7 +45,7 @@ public class SearchPallets extends JPanel implements BasicSubview {
 	private JList<String> orderList;
 	private JFormattedTextField startDate;
 	private JFormattedTextField endDate;
-	private JFormattedTextField palletId;
+	private JTextField palletId;
 	private JComboBox<String> productName;
 	private JToggleButton useSpecificProduct;
 	private JLabel countLabel;
@@ -77,7 +84,9 @@ public class SearchPallets extends JPanel implements BasicSubview {
 		JPanel palletSelector = new JPanel();
 		palletSelector.setLayout(new BoxLayout(palletSelector, BoxLayout.X_AXIS));
 		palletSelector.add(new JLabel("Search by pallet id: "));
-		palletId = new JFormattedTextField(format);
+		palletId = new JTextField();
+		((AbstractDocument)palletId.getDocument()).setDocumentFilter(new NumberFilter());
+
 		palletId.setText("0");
 		palletSelector.add(palletId);
 
@@ -120,7 +129,7 @@ public class SearchPallets extends JPanel implements BasicSubview {
 			p = db.getPalletFromId(palletId.getText());
 			String element = p.id + " Product: " + p.productName + " Location: " + p.location + " Created: " + p.inTime + " Distrubuted: " + p.outTime;
 			orderListModel.addElement(element);
-			
+
 		} else {
 			ArrayList<Pallet> pallets = null;
 			pallets = useSpecificProduct.isSelected() ? db.getPallets(startDate.getText(), endDate.getText(), productName.getSelectedItem().toString()) : db.getPallets(startDate.getText(), endDate.getText());
@@ -204,6 +213,58 @@ public class SearchPallets extends JPanel implements BasicSubview {
 			fillList();
 		}
 	}
+
+	class NumberFilter extends DocumentFilter
+	{
+	    @Override
+	    public void insertString(DocumentFilter.FilterBypass fp
+	            , int offset, String string, AttributeSet aset)
+	                                throws BadLocationException
+	    {
+	        int len = string.length();
+	        boolean isValidInteger = palletId.getText().length() >= 9 ? false : true;
+
+	        for (int i = 0; i < len; i++)
+	        {
+	            if (!Character.isDigit(string.charAt(i)))
+	            {
+	                isValidInteger = false;
+	                break;
+	            }
+	        }
+	        if (isValidInteger)
+	            super.insertString(fp, offset, string, aset);
+	        else
+	            Toolkit.getDefaultToolkit().beep();
+	    }
+
+	    @Override
+	    public void replace(DocumentFilter.FilterBypass fp, int offset
+	                    , int length, String string, AttributeSet aset)
+	                                        throws BadLocationException
+	    {
+	        int len = string.length();
+	        boolean isValidInteger = palletId.getText().length() >= 9 ? false : true;
+
+	        for (int i = 0; i < len; i++)
+	        {
+	            if (!Character.isDigit(string.charAt(i)))
+	            {
+	                isValidInteger = false;
+	                break;
+	            }
+	        }
+	        if (len > 10) {
+	        	isValidInteger = false;
+	        }
+
+	        if (isValidInteger)
+	            super.replace(fp, offset, length, string, aset);
+	        else
+	            Toolkit.getDefaultToolkit().beep();
+	    }
+	}
+
 
 
 }
