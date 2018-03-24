@@ -18,3 +18,25 @@ INSERT INTO ingredients (name) VALUES ('Vanilla');
 INSERT INTO ingredients (name) VALUES ('Chopped almonds');
 INSERT INTO ingredients (name) VALUES ('Cinnamon');
 INSERT INTO ingredients (name) VALUES ('Vanilla sugar');
+
+-- Inserting amounts
+
+INSERT INTO ingredient_updates VALUES ('Flour', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Butter', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Icing sugar', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Roasted, chopped nuts', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Fine-ground nuts', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Ground, roasted nuts', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Bread crumbs', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Sugar', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Egg whites', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Chocolate', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Marzipan', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Eggs', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Potato starch', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Wheat flour', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Sodium bicarbonate', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Vanilla', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Chopped almonds', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Cinnamon', CURRENT_TIMESTAMP, 30000);
+INSERT INTO ingredient_updates VALUES ('Vanilla sugar', CURRENT_TIMESTAMP, 30000);

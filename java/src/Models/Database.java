@@ -471,6 +471,7 @@ public class Database {
 		ArrayList<Ingredient> ingredients = getIngredientsForRecipe(productName);
 		for (Ingredient ingredient : ingredients) {
 			if (this.getIngredient(ingredient.getName()).getAmount() < ingredient.getAmount() * cookiesPerPallet/cookiesPerRecipe) {
+				System.out.println("Not enough " + ingredient.getName());
 				return false;
 			}
 		}
