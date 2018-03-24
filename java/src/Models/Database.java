@@ -474,10 +474,6 @@ public class Database {
 			}
 		}
 
-		for (Ingredient ingredient : ingredients) {
-			updateIngredient(ingredient.getName(), -ingredient.getAmount() * cookiesPerPallet/cookiesPerRecipe);
-		}
-
 		//Inserting to pallets
 		String query = "INSERT INTO pallets (pallet_id, product_name, receiver) "
 				+ "VALUES (?,?, 'NONE')";
@@ -485,11 +481,20 @@ public class Database {
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, id);
 			ps.setString(2, productName);
-			int result = ps.executeUpdate();
-			return new Response(result != 0, "");
+			boolean result = ps.executeUpdate() != 0;
+			if (result) {
+				for (Ingredient ingredient : ingredients) {
+					updateIngredient(ingredient.getName(), -ingredient.getAmount() * cookiesPerPallet/cookiesPerRecipe);
+				}
+			}
+			return new Response(result, "");
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return new Response(false, "Database connection failed.");
+			if (e.getErrorCode() == 19) {
+				return new Response(false, "Pallet with that number has already been created.");
+			} else {
+				e.printStackTrace();
+				return new Response(false, "Database connection failed.");
+			}
 		}
 	}
 }
