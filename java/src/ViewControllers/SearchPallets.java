@@ -117,6 +117,11 @@ public class SearchPallets extends JPanel implements BasicSubview {
 			orderListModel.clear();
 			Pallet p;
 			p = db.getPalletFromId(palletId.getText());
+
+			if (p == null) {
+				return;
+			}
+
 			String element = p.id + " Product: " + p.productName + " Location: " + p.location + " Created: " + p.inTime + " Distributed: " + p.outTime;
 			orderListModel.addElement(element);
 

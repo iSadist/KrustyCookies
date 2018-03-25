@@ -1,5 +1,7 @@
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -14,21 +16,18 @@ public class Main {
 		Database db = new Database();
 		db.openConnection("database.db");
 
-		JFrame raw = new JFrame("Program 3: raw materials and recipies");
-		JFrame production = new JFrame("Program 1: production, blocking & searching");
-		JFrame order = new JFrame("Program 2: orders & deliveries");
+		JFrame gui = new JFrame("Krusty Cookies");
+		JPanel guiPanel = new JPanel();
+		guiPanel.setLayout(new BorderLayout());
 
-		raw.add(new RawView(db));
-		production.add(new ProductionView(db));
-		order.add(new OrderDeliveryView(db));
+		guiPanel.add(new ProductionView(db), BorderLayout.WEST);
+		guiPanel.add(new OrderDeliveryView(db), BorderLayout.EAST);
+		guiPanel.add(new RawView(db), BorderLayout.SOUTH);
 
-		raw.setSize(1250, 350);
-		production.setSize(600, 700);
-		order.setSize(900, 500);
-
-		raw.setVisible(true);
-		production.setVisible(true);
-		order.setVisible(true);
+		gui.add(guiPanel);
+		gui.setSize(2000, 1000);
+		gui.setVisible(true);
+		guiPanel.setVisible(true);
 	}
 
 }
