@@ -68,9 +68,9 @@ make clean
 
 ## How to use the program
 
-The application consists of 3 windows.
+The application consists of 1 window with 3 views.
 
-In the first window the user can inspect and update the storage of any ingredient as well as adding a new one.
+In the bottom view the user can inspect and update the storage of any ingredient as well as adding a new one.
 A new ingredient is added by clicking 'Add new ingredient' and filling in the information. An ingredient is updated
 by first selecting it from the list, filling in the bottom field and clicking 'Update'.
 
@@ -78,11 +78,11 @@ It is also possible to inspect different recipes by switching to the 'Recipes' t
 by first clicking the 'Update' button to the left, changing the amount and clicking 'Save'.
 A new ingredient is added to the recipe by clicking 'New Ingredient'. Each ingredient can be removed by clicking 'Remove' next to it.
 
-The second window handles Orders and Customers. Here, orders can be inspected by first filtering by the start and end dates and
+The view on the right handles Orders and Customers. Here, orders can be inspected by first filtering by the start and end dates and
 selecting the order from the list. The products and the amount will be shown below.
-Customers can be listed in the same way by switching to the 'Customer' tab.
+Customers can be listed in the same way by switching to the 'Customer' tab. However, no orders can be created since this was not a part of the assignment.
 
-Finally, the last window handles the pallets. They are listed the same way as orders but with the ability to filter on products.
+Finally, the view on the left handles the pallets. They are listed the same way as orders but with the ability to filter on products, date, pallet id or customer.
 To block a pallet, the user simply clicks on the pallet he wishes to block and selects 'Yes'.
 In the blocked tab all the blocked pallets are listed. To unblock a pallet the user clicks on the desired pallet and selects 'Yes'.
-For producing pallets the user must head to the 'Production' tab. Here the pallet number is scanned in as well as product selected from the drop down list. If there are any problems with producing a pallet a message will be shown just under the 'Scan in' button.
+For producing pallets the user must head to the 'Production' tab. Here the product is selected from the drop down list and the pallet will be produced by clicking 'Scan in'. If there are any problems with producing a pallet a message will be shown just under the 'Scan in' button.
