@@ -24,11 +24,11 @@ The model is in the file [`er-model.png`](er-model.png):
 
 ## Relations
 + blocked(**_pallet_id_**)
-+ pallets(**pallet_id**, _name_, location, intime, outtime, _order_id_)
++ pallets(**pallet_id**, _product_name_, location, intime, outtime, _order_id_)
 + products(**name**, in_production, instructions)
-+ product_orders(**_name_**, amount, **_order_id_**)
++ product_orders(**_product_name_**, amount, **_order_id_**)
 + customers(**company_name**, address)
-+ orders(**order_id**, delivery_date, company_name)
++ orders(**order_id**, delivery_date, _company_name_)
 + contains(**_product_name_**, **_ingredient_name_**, amount, type)
 + ingredients(**name**, type)
 + ingredient_updates(**_ingredient_name_**, day, amount)
