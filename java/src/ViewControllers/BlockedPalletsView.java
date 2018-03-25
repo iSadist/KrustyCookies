@@ -95,11 +95,13 @@ public class BlockedPalletsView extends JPanel implements BasicSubview {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			int a = JOptionPane.showConfirmDialog(null,
+			if(palletList.getModel().getSize() > 0){
+				int a = JOptionPane.showConfirmDialog(null,
 					"Unblock this product?", "Unblock this product?", JOptionPane.YES_NO_OPTION);
-			if (a == 0) {
-				int endSub = palletList.getSelectedValue().indexOf("Product") - 1;
-				db.removeFromBlocked(Integer.valueOf(palletList.getSelectedValue().substring(0, endSub)));
+				if (a == 0) {
+					int endSub = palletList.getSelectedValue().indexOf("Product") - 1;
+					db.removeFromBlocked(Integer.valueOf(palletList.getSelectedValue().substring(0, endSub)));
+				}
 			}
 			fillList();
 		}

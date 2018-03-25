@@ -158,11 +158,13 @@ public class SearchPallets extends JPanel implements BasicSubview {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			int a = JOptionPane.showConfirmDialog(null,
+			if(orderList.getModel().getSize() > 0){
+				int a = JOptionPane.showConfirmDialog(null,
 					"Block this product?", "Block this product?", JOptionPane.YES_NO_OPTION);
-			if (a == 0) {
-				int endSub = orderList.getSelectedValue().indexOf("Product") - 1;
-				db.addToBlocked(Integer.valueOf(orderList.getSelectedValue().substring(0, endSub)));
+				if (a == 0) {
+					int endSub = orderList.getSelectedValue().indexOf("Product") - 1;
+					db.addToBlocked(Integer.valueOf(orderList.getSelectedValue().substring(0, endSub)));
+				}
 			}
 			fillList();
 		}

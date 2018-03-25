@@ -399,7 +399,9 @@ public class Database {
 	public ArrayList<Pallet> getPallets(String begin, String end) {
 		ArrayList<Pallet> list = new ArrayList<Pallet>();
 		String query = "SELECT * FROM pallets "
-				+ "WHERE in_time BETWEEN ? AND ?";
+				+ "WHERE in_time BETWEEN ? AND ? "
+				+ "AND pallet_id NOT IN "
+				+ "(SELECT pallet_id FROM blocked)";
 		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, begin);
 			ps.setString(2, end);
@@ -424,7 +426,9 @@ public class Database {
 	public Pallet getPalletFromId(String id) {
 		Pallet p = new Pallet();
 		String query = "SELECT * FROM pallets "
-				+ "WHERE pallet_id = ?";
+				+ "WHERE pallet_id = ? "
+				+ "AND pallet_id NOT IN "
+				+ "(SELECT pallet_id FROM blocked)";
 		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, id);
 			ResultSet rs = ps.executeQuery();
@@ -448,7 +452,9 @@ public class Database {
 		ArrayList<Pallet> list = new ArrayList<Pallet>();
 		String query = "SELECT * FROM pallets "
 				+ "WHERE in_time BETWEEN ? AND ? "
-				+ "AND product_name = ?";
+				+ "AND product_name = ? "
+				+ "AND pallet_id NOT IN "
+				+ "(SELECT pallet_id FROM blocked)";
 		try (PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, begin);
 			ps.setString(2, end);
