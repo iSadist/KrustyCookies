@@ -1,5 +1,6 @@
 compile:
 	echo "-------Compiling application-------"
+	cd ./java && mkdir -p bin
 	cd ./java && javac -d bin/ -cp src src/Main.java
 
 run:
@@ -11,6 +12,7 @@ else
 endif
 
 all:
+	make clean
 	make generate-db
 	make compile
 	make run
@@ -21,6 +23,6 @@ generate-db:
 	cp -i ./SQL/database.db ./java
 
 clean:
-	rm ./java/database.db
-	rm -rf ./java/bin/*
+	rm -f ./java/database.db
+	rm -rf ./java/bin
 	cd ./SQL && make clean

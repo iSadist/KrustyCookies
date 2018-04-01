@@ -8,4 +8,4 @@ all:
 	sqlite3 database.db < products.sql
 
 clean:
-	rm database.db
+	rm -f database.db
